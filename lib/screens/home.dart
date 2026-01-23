@@ -27,88 +27,83 @@ class _HomeState extends State<Home> {
     imagePicker = ImagePicker();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reporte de Gastos'),
-        backgroundColor: Colors.deepPurple,
-      ),
-      body: SafeArea(
-        child:Stack (
-          children:[
-            Positioned.fill(
-              child:Image.asset(
-                "assets/img/Wavy_Bus-14_Single-10-copy.jpg",
-                fit: BoxFit.cover,
-              ),
-            ),
-            Column(
-          children: <Widget>[
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom:70),
-              child: Center(
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed:() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context)=> const MyExpenses(),
-                          ),
-                        );
-                      },
-                      child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('Iniciar como Usuario'),
-                        if (isRecognizing) ...[
-                          const SizedBox(width: 20),
-                          const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.5,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: null,
-                      child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('Iniciar como Aprobador'),
-                        if (isRecognizing) ...[
-                          const SizedBox(width: 20),
-                          const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.5,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-             ),
-            ),
-          ]
-        )
-          ],
+        appBar: AppBar(
+          title: const Text('Reporte de Gastos'),
+          backgroundColor: Colors.deepPurple,
+        ),
+        body: SafeArea(
           
-        ), 
-        
-      )
-    );
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  "assets/img/Wavy_Bus-14_Single-10-copy-removebg-preview.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Column(children: <Widget>[
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 70),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MyExpenses(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('Iniciar como Usuario'),
+                              if (isRecognizing) ...[
+                                const SizedBox(width: 20),
+                                const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1.5,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: null,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('Iniciar como Aprobador'),
+                              if (isRecognizing) ...[
+                                const SizedBox(width: 20),
+                                const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1.5,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ])
+            ],
+          ),
+        ));
   }
 }

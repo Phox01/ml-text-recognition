@@ -100,24 +100,66 @@ class _MyExpensesState extends State<MyExpenses> {
                       ]),
                 ),
               ])),
-          Row(
-            children: [
-              Text("Seleccione el informe de gastos para visualizar"),
-              ElevatedButton(
-                onPressed: (){},
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.filter_list, size:20),
-                    Text("Filtrar"),
-                    Icon(Icons.arrow_back_ios_sharp, size:20),
-                    Text("Fecha")
-                  ],
-                )
-              )
-
-            ]
-          )
+          Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+              child: Column(children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Seleccione el informe de gastos para visualizar",
+                          style: TextStyle(fontSize: 11)),
+                      Row(children: [
+                        IconButton(
+                            iconSize: 20,
+                            splashRadius: 20,
+                            icon: const Icon(Icons.filter_list),
+                            tooltip: 'Agregar Gasto',
+                            onPressed: () {},
+                            color: Colors.blueAccent),
+                        IconButton(
+                            iconSize: 20,
+                            splashRadius: 20,
+                            icon: const Icon(Icons.sort),
+                            tooltip: "Sort",
+                            onPressed: () {},
+                            color: Colors.blueAccent)
+                      ]),
+                    ]),
+                Row(children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("Abiertos"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("Pendientes"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(Size(40, 40)),
+                    ),
+                    child: const Text("Aprobados"),
+                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {},
+                  //   child: const Text("Todos"),
+                  // )
+                ]),
+                Container(
+                    height: 400,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(0, 37, 44, 99),
+                    ),
+                    
+                    child: Column(children: [
+                      Row(children: [
+                        Icon(Icons.keyboard_option_key),
+                        Text("No hay gastos para mostrar")
+                      ])
+                    ]))
+              ])),
         ]),
       ),
     );
