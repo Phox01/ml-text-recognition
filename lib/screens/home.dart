@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Reporte de Gastos'),
-          backgroundColor: Colors.deepPurple,
         ),
         body: SafeArea(
           

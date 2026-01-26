@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ml_text_recognition/screens/new_expense.dart';
 
 class MyExpenses extends StatefulWidget {
   const MyExpenses({super.key});
@@ -22,10 +23,17 @@ class _MyExpensesState extends State<MyExpenses> {
               splashRadius: 40,
               icon: const Icon(Icons.add_circle_sharp),
               tooltip: 'Agregar Gasto',
-              onPressed: () {},
-              color: Colors.white),
+              onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const NewExpense(),
+                              ),
+                            );
+                          },
+              color: Colors.blue[400]),
         ],
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Column(children: <Widget>[
@@ -40,14 +48,14 @@ class _MyExpensesState extends State<MyExpenses> {
                         child: Container(
                           height: 70,
                           decoration: BoxDecoration(
-                            color: Colors.white70,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Total Gastos"),
-                                Text("\$ 250.00"),
+                                Text("Abierto (1)"),
+                                Text("Bs 250.00"),
                               ]),
                         ),
                       ),
@@ -56,14 +64,14 @@ class _MyExpensesState extends State<MyExpenses> {
                         child: Container(
                           height: 70,
                           decoration: BoxDecoration(
-                            color: Colors.white70,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Total Gastos"),
-                                Text("\$ 250.00"),
+                                Text("Pendiente"),
+                                Text("Bs 250.00"),
                               ]),
                         ),
                       ),
@@ -72,94 +80,389 @@ class _MyExpensesState extends State<MyExpenses> {
                         child: Container(
                           height: 70,
                           decoration: BoxDecoration(
-                            color: Colors.white70,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Total Gastos"),
-                                Text("\$ 250.00"),
+                                Text("Aprobado"),
+                                Text("Bs 250.00"),
                               ]),
                         ),
                       ),
                     ]),
                 SizedBox(height: 10),
                 Container(
-                  height: 70,
                   width: double.infinity,
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white70,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Total Gastos"),
-                        Text("\$ 250.00"),
+                        Text("Anticipos"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Total:"),
+                              Text("\$ 500.00"),
+                            ],
+                          ),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Por Reportar:"),
+                                Text("\$ 150.00"),
+                              ]),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Por Registrar:"),
+                              Text("\$ 350.00"),
+                            ],
+                          )
+                        ])
                       ]),
                 ),
               ])),
           Padding(
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-              child: Column(children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Seleccione el informe de gastos para visualizar",
-                          style: TextStyle(fontSize: 11)),
-                      Row(children: [
-                        IconButton(
-                            iconSize: 20,
-                            splashRadius: 20,
-                            icon: const Icon(Icons.filter_list),
-                            tooltip: 'Agregar Gasto',
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Seleccione el gasto para visualizar",
+                              style: TextStyle(fontSize: 11)),
+                          Row(children: [
+                            IconButton(
+                                iconSize: 20,
+                                splashRadius: 20,
+                                icon: const Icon(Icons.filter_list),
+                                tooltip: 'Agregar Gasto',
+                                onPressed: () {},
+                                color: Colors.blueAccent),
+                            IconButton(
+                                iconSize: 20,
+                                splashRadius: 20,
+                                icon: const Icon(Icons.sort),
+                                tooltip: "Sort",
+                                onPressed: () {},
+                                color: Colors.blueAccent)
+                          ]),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
                             onPressed: () {},
-                            color: Colors.blueAccent),
-                        IconButton(
-                            iconSize: 20,
-                            splashRadius: 20,
-                            icon: const Icon(Icons.sort),
-                            tooltip: "Sort",
+                            child: const Text("Abiertos"),
+                          ),
+                          ElevatedButton(
                             onPressed: () {},
-                            color: Colors.blueAccent)
-                      ]),
-                    ]),
-                Row(children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Abiertos"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Pendientes"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      minimumSize: WidgetStateProperty.all(Size(40, 40)),
-                    ),
-                    child: const Text("Aprobados"),
-                  ),
-                  // ElevatedButton(
-                  //   onPressed: () {},
-                  //   child: const Text("Todos"),
-                  // )
-                ]),
+                            child: const Text("Pendientes"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            // style: ButtonStyle(
+                            //   fixedSize: WidgetStateProperty.all(Size(100, 40)),
+                            // ),
+                            child: const Text("Aprobados"),
+                          ),
+                          // ElevatedButton(
+                          //   onPressed: () {},
+                          //   child: const Text("Todos"),
+                          // )
+                        ]),
+                  ])),
+          Expanded(
+              child: ListView.separated(
+            padding: const EdgeInsets.all(8),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              final items = [
                 Container(
-                    height: 400,
+                    padding: const EdgeInsets.all(12),
+                    height: 100,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(0, 37, 44, 99),
+                      color: Color.fromRGBO(0, 54, 99, 1),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    
-                    child: Column(children: [
-                      Row(children: [
-                        Icon(Icons.keyboard_option_key),
-                        Text("No hay gastos para mostrar")
-                      ])
-                    ]))
-              ])),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.list_alt_rounded,
+                                          color: Colors.white, size: 15),
+                                      const SizedBox(width: 8),
+                                      Text("8 de diciembre 2025 12:35",
+                                          style: TextStyle(color: Colors.white))
+                                    ]),
+                                Text("Bs  0.00",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text("Prueba de Gasto",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Abierto",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 14))
+                              ])
+                        ])),
+                Container(
+                    padding: const EdgeInsets.all(12),
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 54, 99, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.list_alt_rounded,
+                                          color: Colors.white, size: 15),
+                                      const SizedBox(width: 8),
+                                      Text("8 de diciembre 2025 12:35",
+                                          style: TextStyle(color: Colors.white))
+                                    ]),
+                                Text("Bs  0.00",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text("Prueba de Gasto",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Abierto",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 14))
+                              ])
+                        ])),
+                Container(
+                    padding: const EdgeInsets.all(12),
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 54, 99, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.list_alt_rounded,
+                                          color: Colors.white, size: 15),
+                                      const SizedBox(width: 8),
+                                      Text("8 de diciembre 2025 12:35",
+                                          style: TextStyle(color: Colors.white))
+                                    ]),
+                                Text("Bs  0.00",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text("Prueba de Gasto",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Abierto",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 14))
+                              ])
+                        ])),
+                Container(
+                    padding: const EdgeInsets.all(12),
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 54, 99, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.list_alt_rounded,
+                                          color: Colors.white, size: 15),
+                                      const SizedBox(width: 8),
+                                      Text("8 de diciembre 2025 12:35",
+                                          style: TextStyle(color: Colors.white))
+                                    ]),
+                                Text("Bs  0.00",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text("Prueba de Gasto",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Abierto",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 14))
+                              ])
+                        ])),
+                Container(
+                    padding: const EdgeInsets.all(12),
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 54, 99, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.list_alt_rounded,
+                                          color: Colors.white, size: 15),
+                                      const SizedBox(width: 8),
+                                      Text("8 de diciembre 2025 12:35",
+                                          style: TextStyle(color: Colors.white))
+                                    ]),
+                                Text("Bs  0.00",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text("Prueba de Gasto",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Abierto",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 14))
+                              ])
+                        ])),
+                Container(
+                    padding: const EdgeInsets.all(12),
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 54, 99, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.list_alt_rounded,
+                                          color: Colors.white, size: 15),
+                                      const SizedBox(width: 8),
+                                      Text("8 de diciembre 2025 12:35",
+                                          style: TextStyle(color: Colors.white))
+                                    ]),
+                                Text("Bs  0.00",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text("Prueba de Gasto",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Abierto",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 14))
+                              ])
+                        ])),
+              ];
+              return items[index];
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 8),
+          ))
         ]),
       ),
     );
