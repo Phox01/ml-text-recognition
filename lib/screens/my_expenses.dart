@@ -55,7 +55,8 @@ class _MyExpensesState extends State<MyExpenses> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("Abierto (1)"),
-                                Text("Bs 250.00"),
+                                Text("Bs 250.00",
+                              style: TextStyle(fontSize: 18)),
                               ]),
                         ),
                       ),
@@ -71,7 +72,8 @@ class _MyExpensesState extends State<MyExpenses> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("Pendiente"),
-                                Text("Bs 250.00"),
+                                Text("Bs 250.00",
+                              style: TextStyle(fontSize: 18)),
                               ]),
                         ),
                       ),
@@ -87,7 +89,8 @@ class _MyExpensesState extends State<MyExpenses> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("Aprobado"),
-                                Text("Bs 250.00"),
+                                Text("Bs 250.00",
+                              style: TextStyle(fontSize: 18)),
                               ]),
                         ),
                       ),
@@ -103,7 +106,8 @@ class _MyExpensesState extends State<MyExpenses> {
                   child: const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Anticipos"),
+                        Text("Anticipos",
+                              style: TextStyle(fontSize: 15, color: Color.fromRGBO(39, 113, 194, 100))),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -111,20 +115,23 @@ class _MyExpensesState extends State<MyExpenses> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Total:"),
-                              Text("\$ 500.00"),
+                              Text("\$ 500.00",
+                              style: TextStyle(fontSize: 18)),
                             ],
                           ),
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Por Reportar:"),
-                                Text("\$ 150.00"),
+                                Text("\$ 150.00",
+                              style: TextStyle(fontSize: 18)),
                               ]),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Por Registrar:"),
-                              Text("\$ 350.00"),
+                              Text("\$ 350.00",
+                              style: TextStyle(fontSize: 18)),
                             ],
                           )
                         ])
