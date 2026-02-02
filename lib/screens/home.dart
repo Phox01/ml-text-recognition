@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+  textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
     imagePicker = ImagePicker();
   }
 
