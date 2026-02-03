@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "recognize_receipt.dart";
 
 class ExpenseCreated extends StatelessWidget {
   const ExpenseCreated({super.key});
@@ -148,7 +149,13 @@ class ExpenseCreated extends StatelessWidget {
                         child: Text("Comentarios")
                       ),
                       TextButton.icon(
-                                    onPressed:() {},
+                                    onPressed:() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => RecognizeReceipt())
+                                        );
+                                      
+                                    },
                                     style: TextButton.styleFrom(
                                       foregroundColor: Colors.blue,
                                     ),

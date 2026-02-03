@@ -15,26 +15,28 @@ class ImagePreview extends StatelessWidget {
       width: double.infinity,
       height: 300,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(255, 203, 203, 203),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: Offset(0, 3),
-          ),
-        ],
       ),
       child: imagePath == null
           ? const Center(
-              child: Text(
-                "No image selected",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.receipt_long_outlined,
+                  size: 60,
+                  color: Colors.black,
                 ),
-              ),
-            )
+                SizedBox(height: 10),
+                Text(
+                  "Procesador de Recibos",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ))
           : Image.file(
               File(imagePath!),
               fit: BoxFit.contain,
