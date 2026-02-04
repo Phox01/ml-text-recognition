@@ -14,6 +14,8 @@ class _NewExpenseState extends State<NewExpense> {
   final TextEditingController _date = TextEditingController();
   final TextEditingController _date2 = TextEditingController();
   late String dropdownValue = 'Hello';
+  String _title = '';
+  String _costCenter = '';
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,12 @@ class _NewExpenseState extends State<NewExpense> {
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide.none)),
                                       readOnly: true,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Por favor seleccione una fecha';
+                                        }
+                                        return null;
+                                      },
                                       onTap: () async {
                                         DateTime? pickedDate =
                                             await showDatePicker(
@@ -104,6 +112,15 @@ class _NewExpenseState extends State<NewExpense> {
                               ],
                             ),
                             TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Por favor ingrese un título';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _title = value!;
+                              },
                               decoration: const InputDecoration(
                                   labelText: "Título del reporte",
                                   hintText: "Escribir título del reporte",
@@ -131,7 +148,8 @@ class _NewExpenseState extends State<NewExpense> {
                               icon: Icon(Icons.arrow_drop_down),
                               decoration: const InputDecoration(
                                   labelText: "Centro de Costo",
-                                  hintText: "Escribir nombre del centro de costo",
+                                  hintText:
+                                      "Escribir nombre del centro de costo",
                                   filled: true,
                                   prefixIcon: Icon(Icons.business_center),
                                   focusedBorder: OutlineInputBorder(
@@ -166,10 +184,13 @@ class _NewExpenseState extends State<NewExpense> {
                                   SizedBox(width: 20),
                                   ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) =>  ExpenseCreated())
-                                        );
+                                      if (_formKey.currentState!.validate()) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ExpenseCreated()));
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor:

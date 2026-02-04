@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ml_text_recognition/screens/new_expense.dart';
 
 class MyExpenses extends StatefulWidget {
@@ -16,7 +17,13 @@ class _MyExpensesState extends State<MyExpenses> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Mis Gastos'),
+        title: const Text(
+          'Mis Gastos'
+        ),
+        backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         actions: [
           IconButton(
               iconSize: 40,
@@ -24,16 +31,15 @@ class _MyExpensesState extends State<MyExpenses> {
               icon: const Icon(Icons.add_circle_sharp),
               tooltip: 'Agregar Gasto',
               onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const NewExpense(),
-                              ),
-                            );
-                          },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NewExpense(),
+                  ),
+                );
+              },
               color: Colors.blue[400]),
         ],
-        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Column(children: <Widget>[
@@ -56,7 +62,7 @@ class _MyExpensesState extends State<MyExpenses> {
                               children: [
                                 Text("Abierto (1)"),
                                 Text("Bs 250.00",
-                              style: TextStyle(fontSize: 18)),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                         ),
                       ),
@@ -73,7 +79,7 @@ class _MyExpensesState extends State<MyExpenses> {
                               children: [
                                 Text("Pendiente"),
                                 Text("Bs 250.00",
-                              style: TextStyle(fontSize: 18)),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                         ),
                       ),
@@ -90,7 +96,7 @@ class _MyExpensesState extends State<MyExpenses> {
                               children: [
                                 Text("Aprobado"),
                                 Text("Bs 250.00",
-                              style: TextStyle(fontSize: 18)),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                         ),
                       ),
@@ -107,34 +113,36 @@ class _MyExpensesState extends State<MyExpenses> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Anticipos",
-                              style: TextStyle(fontSize: 15, color: Color.fromRGBO(39, 113, 194, 100))),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Color.fromRGBO(39, 113, 194, 100))),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Total:"),
-                              Text("\$ 500.00",
-                              style: TextStyle(fontSize: 18)),
-                            ],
-                          ),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Por Reportar:"),
-                                Text("\$ 150.00",
-                              style: TextStyle(fontSize: 18)),
-                              ]),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Por Registrar:"),
-                              Text("\$ 350.00",
-                              style: TextStyle(fontSize: 18)),
-                            ],
-                          )
-                        ])
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Total:"),
+                                  Text("\$ 500.00",
+                                      style: TextStyle(fontSize: 18)),
+                                ],
+                              ),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Por Reportar:"),
+                                    Text("\$ 150.00",
+                                        style: TextStyle(fontSize: 18)),
+                                  ]),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Por Registrar:"),
+                                  Text("\$ 350.00",
+                                      style: TextStyle(fontSize: 18)),
+                                ],
+                              )
+                            ])
                       ]),
                 ),
               ])),

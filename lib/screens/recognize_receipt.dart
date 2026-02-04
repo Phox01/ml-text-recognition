@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ml_text_recognition/image_preview.dart';
+import 'package:ml_text_recognition/controllers/recognize_receipt.dart';
+import 'package:provider/provider.dart';
 
 class RecognizeReceipt extends StatefulWidget {
   const RecognizeReceipt({super.key});
@@ -11,62 +12,8 @@ class RecognizeReceipt extends StatefulWidget {
 }
 
 class _RecognizeReceiptState extends State<RecognizeReceipt> {
-  late TextRecognizer textRecognizer;
-  late ImagePicker imagePicker;
 
-  String? pickedImagePath;
-  String recognizedText = "";
-
-  bool isRecognizing = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
-    imagePicker = ImagePicker();
-  }
-
-  void _pickImageAndProcess({required ImageSource source}) async {
-    final pickedImage = await imagePicker.pickImage(source: source);
-
-    if (pickedImage == null) {
-      return;
-    }
-
-    setState(() {
-      pickedImagePath = pickedImage.path;
-      isRecognizing = true;
-    });
-
-    try {
-      final inputImage = InputImage.fromFilePath(pickedImage.path);
-      final RecognizedText recognisedText =
-          await textRecognizer.processImage(inputImage);
-
-      recognizedText = "";
-
-      for (TextBlock block in recognisedText.blocks) {
-        for (TextLine line in block.lines) {
-          recognizedText += "${line.text}\n";
-        }
-      }
-    } catch (e) {
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error recognizing text: $e'),
-        ),
-      );
-    } finally {
-      setState(() {
-        isRecognizing = false;
-      });
-    }
-  }
+  // Controller handles picking and recognizing. Call it from the UI.
 
   void _chooseImageSourceModal() {
     showModalBottomSheet(
@@ -82,7 +29,8 @@ class _RecognizeReceiptState extends State<RecognizeReceipt> {
                 title: const Text('Choose from gallery'),
                 onTap: () {
                   Navigator.pop(context);
-                  _pickImageAndProcess(source: ImageSource.gallery);
+                  final ctl = Provider.of<RecognizeReceiptController>(context, listen: false);
+                  ctl.pickImage(ImageSource.gallery);
                 },
               ),
               ListTile(
@@ -90,7 +38,8 @@ class _RecognizeReceiptState extends State<RecognizeReceipt> {
                 title: const Text('Take a picture'),
                 onTap: () {
                   Navigator.pop(context);
-                  _pickImageAndProcess(source: ImageSource.camera);
+                  final ctl = Provider.of<RecognizeReceiptController>(context, listen: false);
+                  ctl.pickImage(ImageSource.camera);
                 },
               ),
             ],
@@ -101,115 +50,120 @@ class _RecognizeReceiptState extends State<RecognizeReceipt> {
   }
 
   void _copyTextToClipboard() async {
-    if (recognizedText.isNotEmpty) {
-      await Clipboard.setData(ClipboardData(text: recognizedText));
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Text copied to clipboard'),
-        ),
-      );
-    }
+    final ctl = Provider.of<RecognizeReceiptController>(context, listen: false);
+    final success = await ctl.copyRecognizedTextToClipboard();
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(success ? 'Text copied to clipboard' : 'No text to copy'),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recibo'),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+    return ChangeNotifierProvider(
+      create: (_) => RecognizeReceiptController(),
+      child: Consumer<RecognizeReceiptController>(
+        builder: (context, controller, _) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Recibo'),
+            ),
+            body: SafeArea(
               child: Column(
-                children: [
-                  ImagePreview(imagePath: pickedImagePath),
-                  Container(
-                    height: 50,
-                    color: Color.fromRGBO(9, 33, 98, 1),
-                    child: Center(
-                      child: ElevatedButton(
-                        onPressed: isRecognizing ? null : _chooseImageSourceModal,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(14, 49, 143, 1),
-                          foregroundColor: Colors.black,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text('Pick an image', style: TextStyle(color: Colors.white)),
-                            if (isRecognizing) ...[
-                              const SizedBox(width: 8),
-                              const SizedBox(
-                                width: 8,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1.5,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: 16,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Recognized Text",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.copy,
-                      size: 16,
-                    ),
-                    onPressed: _copyTextToClipboard,
-                  ),
-                ],
-              ),
-            ),
-            if (!isRecognizing) ...[
-              Expanded(
-                child: Scrollbar(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: [
-                        Flexible(
-                          child: SelectableText(
-                            recognizedText.isEmpty
-                                ? "No text recognized"
-                                : recognizedText,
+                        ImagePreview(imagePath: controller.pickedImagePath),
+                        Container(
+                          height: 50,
+                          color: Color.fromRGBO(9, 33, 98, 1),
+                          child: Center(
+                            child: ElevatedButton(
+                              onPressed: controller.isRecognizing ? null : _chooseImageSourceModal,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(14, 49, 143, 1),
+                                foregroundColor: Colors.black,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text('Pick an image', style: TextStyle(color: Colors.white)),
+                                  if (controller.isRecognizing) ...[
+                                    const SizedBox(width: 8),
+                                    const SizedBox(
+                                      width: 8,
+                                      height: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 1.5,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Recognized Text",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.copy,
+                            size: 16,
+                          ),
+                          onPressed: _copyTextToClipboard,
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (!controller.isRecognizing) ...[
+                    Expanded(
+                      child: Scrollbar(
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: SelectableText(
+                                  controller.recognizedText.isEmpty
+                                      ? "No text recognized"
+                                      : controller.recognizedText,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
-            ],
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
+
+  
 }
