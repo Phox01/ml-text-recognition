@@ -1,62 +1,13 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+export '../viewmodels/recognize_receipt_view_model.dart';
 
-class RecognizeReceiptController extends ChangeNotifier {
-  final TextRecognizer textRecognizer =
-      TextRecognizer(script: TextRecognitionScript.latin);
-  final ImagePicker imagePicker = ImagePicker();
+// Legacy compatibility: provide old name for a short migration period.
+// Consumers importing from controllers/recognize_receipt.dart can keep using
+// `RecognizeReceiptController` as an alias to the new ViewModel.
 
-  String? pickedImagePath;
-  String recognizedText = '';
-  bool isRecognizing = false;
+import '../viewmodels/recognize_receipt_view_model.dart';
+import '../services/recognize_receipt_service.dart';
 
-  Future<void> pickImage(ImageSource source) async {
-    final pickedImage = await imagePicker.pickImage(source: source);
-    if (pickedImage == null) return;
-
-    pickedImagePath = pickedImage.path;
-    isRecognizing = true;
-    notifyListeners();
-
-    try {
-      final inputImage = InputImage.fromFilePath(pickedImage.path);
-      final RecognizedText recognisedText =
-          await textRecognizer.processImage(inputImage);
-
-      final buffer = StringBuffer();
-      for (final block in recognisedText.blocks) {
-        for (final line in block.lines) {
-          buffer.writeln(line.text);
-        }
-      }
-      recognizedText = buffer.toString();
-    } catch (e) {
-      recognizedText = 'Error recognizing text: $e';
-      if (kDebugMode) {
-        print(recognizedText);
-      }
-    } finally {
-      isRecognizing = false;
-      notifyListeners();
-    }
-  }
-
-  Future<bool> copyRecognizedTextToClipboard() async {
-    if (recognizedText.isEmpty) return false;
-    try {
-      await Clipboard.setData(ClipboardData(text: recognizedText));
-      return true;
-    } catch (e) {
-      if (kDebugMode) print('Clipboard error: $e');
-      return false;
-    }
-  }
-
-  @override
-  void dispose() {
-    textRecognizer.close();
-    super.dispose();
-  }
+class RecognizeReceiptController extends RecognizeReceiptViewModel {
+  RecognizeReceiptController({RecognizeReceiptService? service}) : super(service: service);
 }
+
