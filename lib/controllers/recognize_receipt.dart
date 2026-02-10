@@ -8,6 +8,6 @@ import '../viewmodels/recognize_receipt_view_model.dart';
 import '../services/recognize_receipt_service.dart';
 
 class RecognizeReceiptController extends RecognizeReceiptViewModel {
-  RecognizeReceiptController({RecognizeReceiptService? service}) : super(service: service);
+  RecognizeReceiptController({super.service});
 }
 

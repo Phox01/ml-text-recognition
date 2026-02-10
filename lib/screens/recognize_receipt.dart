@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ml_text_recognition/image_preview.dart';
 import 'package:ml_text_recognition/viewmodels/recognize_receipt_view_model.dart';
@@ -92,7 +91,11 @@ class _RecognizeReceiptState extends State<RecognizeReceipt> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        ImagePreview(imagePath: controller.pickedImagePath),
+                        ImagePreview(
+                          imagePath: controller.pickedImagePath,
+                          boxes: controller.recognizedBoxes,
+                          blockBoxes: controller.recognizedBlockBoxes, //Basically this helps creating the boxes where I want
+                        ),
                         Container(
                           height: 50,
                           color: Color.fromRGBO(9, 33, 98, 1),
